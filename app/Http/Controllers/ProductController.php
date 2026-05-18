@@ -289,7 +289,7 @@ class ProductController extends Controller
 
                 $data = array();
                 // foreach (json_decode($request[$str][0]) as $key => $eachValue) {
-                foreach ($request[$str] as $key => $eachValue) {
+                foreach ($request->input($str, array()) as $key => $eachValue) {
                     // array_push($data, $eachValue->value);
                     array_push($data, $eachValue);
                 }
@@ -360,10 +360,12 @@ class ProductController extends Controller
             foreach ($request->choice_no as $key => $no) {
                 $name = 'choice_options_'.$no;
                 $data = array();
-                foreach ($request[$name] as $key => $eachValue) {
+                foreach ($request->input($name, array()) as $key => $eachValue) {
                     array_push($data, $eachValue);
                 }
-                array_push($options, $data);
+                if (count($data) > 0) {
+                    array_push($options, $data);
+                }
             }
         }
 
@@ -635,7 +637,7 @@ class ProductController extends Controller
                 $item['attribute_id'] = $no;
 
                 $data = array();
-                foreach ($request[$str] as $key => $eachValue) {
+                foreach ($request->input($str, array()) as $key => $eachValue) {
                     array_push($data, $eachValue);
                 }
 
@@ -669,10 +671,12 @@ class ProductController extends Controller
             foreach ($request->choice_no as $key => $no) {
                 $name = 'choice_options_'.$no;
                 $data = array();
-                foreach ($request[$name] as $key => $item) {
+                foreach ($request->input($name, array()) as $key => $item) {
                     array_push($data, $item);
                 }
-                array_push($options, $data);
+                if (count($data) > 0) {
+                    array_push($options, $data);
+                }
             }
         }
 
@@ -768,7 +772,14 @@ class ProductController extends Controller
         Artisan::call('view:clear');
         Artisan::call('cache:clear');
 
-        return back();
+        $lang = $request->lang ?? env('DEFAULT_LANGUAGE');
+
+        if (Auth::user()->user_type == 'seller') {
+            return redirect()->route('seller.products.edit', ['id' => $product->id, 'lang' => $lang]);
+        }
+
+        $edit_route = $product->added_by == 'seller' ? 'products.seller.edit' : 'products.admin.edit';
+        return redirect()->route($edit_route, ['id' => $product->id, 'lang' => $lang]);
     }
 
     /**
@@ -952,11 +963,13 @@ class ProductController extends Controller
                 $name = 'choice_options_'.$no;
                 $data = array();
                 // foreach (json_decode($request[$name][0]) as $key => $item) {
-                foreach ($request[$name] as $key => $item) {
+                foreach ($request->input($name, array()) as $key => $item) {
                     // array_push($data, $item->value);
                     array_push($data, $item);
                 }
-                array_push($options, $data);
+                if (count($data) > 0) {
+                    array_push($options, $data);
+                }
             }
         }
 
@@ -985,11 +998,13 @@ class ProductController extends Controller
                 $name = 'choice_options_'.$no;
                 $data = array();
                 // foreach (json_decode($request[$name][0]) as $key => $item) {
-                foreach ($request[$name] as $key => $item) {
+                foreach ($request->input($name, array()) as $key => $item) {
                     // array_push($data, $item->value);
                     array_push($data, $item);
                 }
-                array_push($options, $data);
+                if (count($data) > 0) {
+                    array_push($options, $data);
+                }
             }
         }
 

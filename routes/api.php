@@ -88,6 +88,7 @@ Route::group(['prefix' => 'v2', 'middleware' => ['app_language']], function() {
 
     Route::get('products/featured-from-seller/{id}', 'Api\V2\ProductController@newFromSeller')->name('products.featuredromSeller');
     Route::get('products/search', 'Api\V2\ProductController@search');
+    
     Route::get('products/variant/price', 'Api\V2\ProductController@variantPrice');
     Route::get('products/home', 'Api\V2\ProductController@home');
     Route::apiResource('products', 'Api\V2\ProductController')->except(['store', 'update', 'destroy']);

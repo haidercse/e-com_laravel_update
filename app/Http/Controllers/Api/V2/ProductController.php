@@ -70,7 +70,7 @@ class ProductController extends Controller
 
     public function todaysDeal()
     {
-        return Cache::remember('app.todays_deal', 86400, function(){
+        return Cache::remember('app.todays_deal', 86400, function () {
             $products = Product::where('todays_deal', 1);
             return new ProductMiniCollection(filter_products($products)->limit(20)->latest()->get());
         });
@@ -78,7 +78,7 @@ class ProductController extends Controller
 
     public function flashDeal()
     {
-        return Cache::remember('app.flash_deals', 86400, function(){
+        return Cache::remember('app.flash_deals', 86400, function () {
             $flash_deals = FlashDeal::where('status', 1)->where('featured', 1)->where('start_date', '<=', strtotime(date('d-m-Y')))->where('end_date', '>=', strtotime(date('d-m-Y')))->get();
             return new FlashDealCollection($flash_deals);
         });
@@ -92,7 +92,7 @@ class ProductController extends Controller
 
     public function bestSeller()
     {
-        return Cache::remember('app.best_selling_products', 86400, function(){
+        return Cache::remember('app.best_selling_products', 86400, function () {
             $products = Product::orderBy('num_of_sale', 'desc');
             return new ProductMiniCollection(filter_products($products)->limit(20)->get());
         });
@@ -100,7 +100,7 @@ class ProductController extends Controller
 
     public function related($id)
     {
-        return Cache::remember("app.related_products-$id", 86400, function() use ($id){
+        return Cache::remember("app.related_products-$id", 86400, function () use ($id) {
             $product = Product::find($id);
             $products = Product::where('category_id', $product->category_id)->where('id', '!=', $id);
             return new ProductMiniCollection(filter_products($products)->limit(10)->get());
@@ -109,7 +109,7 @@ class ProductController extends Controller
 
     public function topFromSeller($id)
     {
-        return Cache::remember("app.top_from_this_seller_products-$id", 86400, function() use ($id){
+        return Cache::remember("app.top_from_this_seller_products-$id", 86400, function () use ($id) {
             $product = Product::find($id);
             $products = Product::where('user_id', $product->user_id)->orderBy('num_of_sale', 'desc');
 
@@ -161,8 +161,8 @@ class ProductController extends Controller
         if ($name != null && $name != "") {
             $products->where(function ($query) use ($name) {
                 foreach (explode(' ', trim($name)) as $word) {
-                    $query->where('name', 'like', '%'.$word.'%')->orWhere('tags', 'like', '%'.$word.'%')->orWhereHas('product_translations', function($query) use ($word){
-                        $query->where('name', 'like', '%'.$word.'%');
+                    $query->where('name', 'like', '%' . $word . '%')->orWhere('tags', 'like', '%' . $word . '%')->orWhereHas('product_translations', function ($query) use ($word) {
+                        $query->where('name', 'like', '%' . $word . '%');
                     });
                 }
             });
@@ -205,7 +205,7 @@ class ProductController extends Controller
 
         return new ProductMiniCollection(filter_products($products)->paginate(10));
     }
-
+    
     public function variantPrice(Request $request)
     {
         $product = Product::findOrFail($request->id);
@@ -235,8 +235,10 @@ class ProductController extends Controller
 
         if ($product->discount_start_date == null) {
             $discount_applicable = true;
-        } elseif (strtotime(date('d-m-Y H:i:s')) >= $product->discount_start_date &&
-            strtotime(date('d-m-Y H:i:s')) <= $product->discount_end_date) {
+        } elseif (
+            strtotime(date('d-m-Y H:i:s')) >= $product->discount_start_date &&
+            strtotime(date('d-m-Y H:i:s')) <= $product->discount_end_date
+        ) {
             $discount_applicable = true;
         }
 
@@ -259,10 +261,10 @@ class ProductController extends Controller
         return response()->json([
             'product_id' => $product->id,
             'variant' => $str,
-            'price' => (double)convert_price($price),
+            'price' => (double) convert_price($price),
             'price_string' => format_price(convert_price($price)),
             'stock' => intval($stockQuantity),
-            'image' => $product_stock->image == null ? "" : api_asset($product_stock->image) 
+            'image' => $product_stock->image == null ? "" : api_asset($product_stock->image)
         ]);
     }
 

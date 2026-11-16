@@ -85,5 +85,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(WalletsTableSeeder::class);
         $this->call(WishlistsTableSeeder::class);
+        $this->call(DemoStorefrontSeeder::class);
     }
 }

@@ -1,7 +1,10 @@
 {
     "private": true,
     "scripts": {
-        "dev": "npm run development",
+        "dev": "npm run frontend:build",
+        "frontend:build": "npm --prefix frontend run build",
+        "frontend:dev": "npm --prefix frontend run dev",
+        "serve": "php artisan serve --host=127.0.0.1 --port=8000",
         "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "watch": "npm run development -- --watch",
         "watch-poll": "npm run watch -- --watch-poll",

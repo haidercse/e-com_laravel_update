@@ -7,6 +7,7 @@ use App\Http\Resources\V2\ProductMiniCollection;
 use App\Http\Resources\V2\ShopCollection;
 use App\Http\Resources\V2\ShopDetailsCollection;
 use App\Models\Product;
+use App\Models\Brand;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use App\Utility\SearchUtility;
@@ -74,6 +75,13 @@ class ShopController extends Controller
 
     public function brands($id)
     {
+        $shop = Shop::findOrFail($id);
+        $brandIds = Product::where('user_id', $shop->user_id)
+            ->where('published', 1)
+            ->whereNotNull('brand_id')
+            ->distinct()
+            ->pluck('brand_id');
 
+        return new \App\Http\Resources\V2\BrandCollection(Brand::whereIn('id', $brandIds)->get());
     }
 }

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlixShop - আধুনিক ই-কমার্স</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-gray-800 relative">
+    <!-- Overlay for Sidebar/Cart -->
+    <div id="overlay" onclick="closeAllDrawers()" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden transition-opacity duration-300"></div>
+
+    <!-- Navbar -->
+    <nav class="bg-flix text-white sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Left: Menu & Logo -->
+            <div class="flex items-center gap-4">
+                <!-- Hamburger Menu -->
+                <button onclick="toggleSidebar()" class="hover:bg-flix-dark p-2 rounded transition focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+                
+                <!-- Logo -->
+                <a href="e-com1.html" class="text-2xl font-bold flex items-center gap-2">
+                    <span class="text-flix-secondary text-3xl"><i class="fas fa-bus"></i></span> FlixShop
+                </a>
+            </div>
+
+            <!-- Middle: Search Bar (Hidden on small mobile) -->
+            <div class="hidden md:flex flex-1 mx-10 max-w-xl">
+                <div class="relative w-full">
+                    <input type="text" placeholder="পণ্য খুঁজুন..." class="w-full py-2 px-4 rounded-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-flix-secondary">
+                    <button class="absolute right-1 top-1 bg-flix-secondary hover:bg-yellow-500 text-gray-900 rounded-full px-4 py-1 transition font-bold">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right: Icons -->
+            <div class="flex items-center gap-6">
+                <!-- Cart Trigger -->
+                <button onclick="toggleCart()" class="relative hover:text-flix-secondary transition group">
+                    <div class="flex items-center gap-2">
+                        <div class="relative">
+                            <i class="fas fa-shopping-cart text-2xl group-hover:scale-110 transition-transform"></i>
+                            <span id="cart-count" class="absolute -top-2 -right-2 bg-flix-secondary text-gray-900 text-xs font-bold px-1.5 py-0.5 rounded-full border-2 border-flix">0</span>
+                        </div>
+                        <span class="hidden lg:inline font-semibold">কার্ট</span>
+                    </div>
+                </button>
+                
+                <button class="hover:text-flix-secondary transition">
+                    <i class="fas fa-user text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Search -->
+        <div class="md:hidden px-4 pb-3">
+            <input type="text" placeholder="পণ্য খুঁজুন..." class="w-full py-2 px-4 rounded text-gray-800 focus:outline-none focus:ring-2 focus:ring-flix-secondary">
+        </div>
+    </nav>
+
+    <!-- LEFT SIDEBAR (Sticky/Fixed on Desktop, Drawer on Mobile) -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-white transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out lg:top-[74px] lg:h-[calc(100vh-74px)]">
+        <div class="p-4 bg-flix text-white flex justify-between items-center lg:hidden">
+            <h2 class="text-xl font-bold">মেনু</h2>
+            <button onclick="toggleSidebar()" class="hover:text-gray-200"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        
+        <div class="p-2 h-full relative">
+            <ul class="space-y-1">
+                <li class="group relative">
+                    <a href="#" class="flex items-center justify-between p-3 rounded hover:bg-orange-50 text-gray-700 hover:text-flix transition cursor-pointer">
+                        <span class="flex items-center gap-3"><i class="fas fa-laptop w-5 text-gray-400 group-hover:text-flix"></i> ইলেকট্রনিক্স</span>
+                        <i class="fas fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition"></i>
+                    </a>
+                    <!-- Submenu with Smooth Animation -->
+                    <div class="submenu absolute left-full top-0 w-56 bg-white shadow-xl rounded-r-lg border-l border-gray-100 p-2 z-50">
+                        <ul class="space-y-1">
+                            <li><a href="#" class="block p-2 hover:bg-orange-50 rounded text-gray-600 hover:text-flix text-sm">মোবাইল ফোন</a></li>
+                            <li><a href="#" class="block p-2 hover:bg-orange-50 rounded text-gray-600 hover:text-flix text-sm">ল্যাপটপ</a></li>
+                            <li><a href="#" class="block p-2 hover:bg-orange-50 rounded text-gray-600 hover:text-flix text-sm">হেডফোন</a></li>
+                            <li><a href="#" class="block p-2 hover:bg-orange-50 rounded text-gray-600 hover:text-flix text-sm">ক্যামেরা</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="group relative">
+                    <a href="#" class="flex items-center justify-between p-3 rounded hover:bg-orange-50 text-gray-700 hover:text-flix transition cursor-pointer">
+                        <span class="flex items-center gap-3"><i class="fas fa-tshirt w-5 text-gray-400 group-hover:text-flix"></i> ফ্যাশন</span>
+                        <i class="fas fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition"></i>
+                    </a>
+                    <!-- Submenu -->
+                    <div class="submenu absolute left-full top-0 w-56 bg-white shadow-xl rounded-r-lg border-l border-gray-100 p-2 z-50">
+                        <ul class="space-y-1">
+                            <li><a href="#" class="block p-2 hover:bg-orange-50 rounded text-gray-600 hover:text-flix text-sm">পুরুষদের ফ্যাশন</a></li>
+                            <li><a href="#" class="block p-2 hover:bg-orange-50 rounded text-gray-600 hover:text-flix text-sm">মহিলাদের ফ্যাশন</a></li>
+                            <li><a href="#" class="block p-2 hover:bg-orange-50 rounded text-gray-600 hover:text-flix text-sm">ঘড়ি</a></li>
+                            <li><a href="#" class="block p-2 hover:bg-orange-50 rounded text-gray-600 hover:text-flix text-sm">জুতা</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="group relative">
+                    <a href="#" class="flex items-center justify-between p-3 rounded hover:bg-orange-50 text-gray-700 hover:text-flix transition cursor-pointer">
+                        <span class="flex items-center gap-3"><i class="fas fa-blender w-5 text-gray-400 group-hover:text-flix"></i> হোম অ্যাপ্লায়েন্স</span>
+                        <i class="fas fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition"></i>
+                    </a>
+                     <!-- Submenu -->
+                     <div class="submenu absolute left-full top-0 w-56 bg-white shadow-xl rounded-r-lg border-l border-gray-100 p-2 z-50">
+                        <ul class="space-y-1">
+                            <li><a href="#" class="block p-2 hover:bg-orange-50 rounded text-gray-600 hover:text-flix text-sm">টিভি</a></li>
+                            <li><a href="#" class="block p-2 hover:bg-orange-50 rounded text-gray-600 hover:text-flix text-sm">ফ্রিজ</a></li>
+                            <li><a href="#" class="block p-2 hover:bg-orange-50 rounded text-gray-600 hover:text-flix text-sm">ওয়াশিং মেশিন</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="group relative">
+                    <a href="#" class="flex items-center justify-between p-3 rounded hover:bg-orange-50 text-gray-700 hover:text-flix transition cursor-pointer">
+                        <span class="flex items-center gap-3"><i class="fas fa-magic w-5 text-gray-400 group-hover:text-flix"></i> সৌন্দর্য</span>
+                        <i class="fas fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition"></i>
+                    </a>
+                </li>
+                <li class="group relative">
+                    <a href="#" class="flex items-center justify-between p-3 rounded hover:bg-orange-50 text-gray-700 hover:text-flix transition cursor-pointer">
+                        <span class="flex items-center gap-3"><i class="fas fa-futbol w-5 text-gray-400 group-hover:text-flix"></i> খেলাধুলা</span>
+                        <i class="fas fa-chevron-right text-xs opacity-0 group-hover:opacity-100 transition"></i>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="mt-6 border-t pt-4 px-3">
+                <h3 class="font-bold text-gray-700 mb-3 text-sm uppercase tracking-wide">সেটিং</h3>
+                <ul class="space-y-1">
+                    <li><a href="#" class="block p-2 text-gray-600 hover:text-flix">ভাষা পরিবর্তন</a></li>
+                    <li><a href="#" class="block p-2 text-gray-600 hover:text-flix">সহায়তা কেন্দ্র</a></li>
+                </ul>
+            </div>
+        </div>
+    </aside>
+
+    <!-- RIGHT CART SIDEBAR (Modal Style) -->
+    <aside id="cart-sidebar" class="fixed inset-y-0 right-0 w-96 bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col font-sans">
+        <!-- Header -->
+        <div class="p-4 bg-gray-900 text-white flex justify-between items-center shadow-md">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-shopping-bag text-flix-secondary"></i>
+                <h2 class="text-xl font-bold">আপনার কার্ট <span id="cart-count-header" class="text-sm bg-flix text-white px-2 py-0.5 rounded-full ml-1">0</span></h2>
+            </div>
+            <button onclick="toggleCart()" class="text-gray-400 hover:text-white transition"><i class="fas fa-times text-xl"></i></button>
+        </div>
+
+        <!-- Cart Items (Scrollable) -->
+        <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-4">
+            <!-- Empty State -->
+            <div id="empty-cart-msg" class="flex flex-col items-center justify-center h-full text-gray-400">
+                <i class="fas fa-shopping-basket text-6xl mb-4 opacity-20"></i>
+                <p>আপনার কার্ট খালি</p>
+                <button onclick="toggleCart()" class="mt-4 text-flix hover:underline font-bold">কেনাকাটা করুন</button>
+            </div>
+            
+            <!-- Items injected via JS -->
+        </div>
+
+        <!-- Footer / Checkout -->
+        <div class="p-4 border-t bg-gray-50">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-gray-600">মোট খরচ:</span>
+                <span id="cart-total" class="text-xl font-bold text-flix">৳ ০</span>
+            </div>
+            <a href="checkout.html" class="block w-full text-center bg-flix hover:bg-flix-dark text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-xl transition flex justify-center items-center gap-2">
+                চেকআউট পেজে যান <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content Container -->
+    <div id="main-content" class="transition-all duration-300 lg:ml-64 py-6 px-4">
+        
+        <!-- Hero Slider -->
+        <div class="relative w-full h-56 md:h-96 rounded-2xl overflow-hidden shadow-2xl mb-10 group mx-auto max-w-7xl">
+            <!-- Slide 1 -->
+            <div class="slide active w-full h-full bg-gradient-to-br from-flix via-lime-500 to-green-600 flex items-center justify-center relative">
+                <div class="text-center text-white z-10 p-6 max-w-2xl">
+                    <span class="uppercase tracking-widest text-sm md:text-base font-semibold mb-2 block text-flix-secondary">SUMMER SALE</span>
+                    <h1 class="text-4xl md:text-7xl font-bold mb-4 drop-shadow-md">সবুজ সাশ্রয়</h1>
+                    <p class="text-lg md:text-2xl mb-8 font-light">সেরা দামে সেরা পণ্য, আজই কিনুন।</p>
+                    <button class="bg-white text-flix-dark font-bold py-3 px-10 rounded-full hover:bg-flix-secondary hover:text-gray-900 transition shadow-lg transform hover:-translate-y-1">এখনই কিনুন</button>
+                </div>
+                <!-- Decorative Elements -->
+                <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl"></div>
+                <div class="absolute -top-20 -left-20 w-80 h-80 bg-yellow-400 opacity-20 rounded-full blur-3xl"></div>
+            </div>
+            
+            <!-- Slide 2 -->
+            <div class="slide w-full h-full bg-gray-900 flex items-center justify-center relative">
+                <div class="text-center text-white z-10 p-6">
+                    <h1 class="text-4xl md:text-7xl font-bold mb-4 text-flix-secondary">টেক ধামাকা</h1>
+                    <p class="text-lg md:text-2xl mb-8">গ্যাজেট ও এক্সেসরিজে ৭০% পর্যন্ত ছাড়</p>
+                    <button class="bg-flix text-white font-bold py-3 px-10 rounded-full hover:bg-flix-secondary hover:text-gray-900 transition shadow-lg">অফার দেখুন</button>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <button onclick="changeSlide(-1)" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur-md text-white p-3 rounded-full transition">
+                <i class="fas fa-chevron-left text-xl"></i>
+            </button>
+            <button onclick="changeSlide(1)" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 backdrop-blur-md text-white p-3 rounded-full transition">
+                <i class="fas fa-chevron-right text-xl"></i>
+            </button>
+            
+            <!-- Dots -->
+            <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-3">
+                <button onclick="currentSlide(0)" class="dot w-3 h-3 rounded-full bg-white opacity-50 hover:opacity-100 transition-all"></button>
+                <button onclick="currentSlide(1)" class="dot w-3 h-3 rounded-full bg-white opacity-50 hover:opacity-100 transition-all"></button>
+            </div>
+        </div>
+
+        <!-- Product Grid Section -->
+        <div class="max-w-7xl mx-auto">
+            <div class="flex justify-between items-end mb-6 border-b border-gray-200 pb-4">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-800">জনপ্রিয় পণ্য</h2>
+                    <p class="text-gray-500 mt-1">আমাদের সেরা কালেকশন থেকে বেছে নিন</p>
+                </div>
+                <a href="#" class="text-flix font-semibold hover:text-flix-dark transition flex items-center gap-2">সব দেখুন <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Product Card 1 -->
+                <div class="group product-card bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 p-4 transition duration-300 relative">
+                    <a href="product-details.html" class="block">
+                        <div class="bg-gray-50 rounded-xl h-56 flex items-center justify-center mb-4 relative overflow-hidden group-hover:bg-gray-100 transition">
+                            <span class="absolute top-3 left-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10">-২০%</span>
+                            <i class="fas fa-headphones text-7xl text-gray-300 group-hover:scale-110 transition duration-500"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-1">প্রিমিয়াম হেডফোন</h3>
+                    </a>
+                    
+                    <button onclick="addToCart('প্রিমিয়াম হেডফোন', 1200)" class="absolute top-48 right-4 bg-flix text-white p-3 rounded-full shadow-lg translate-y-20 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-300 hover:bg-flix-dark z-20">
+                        <i class="fas fa-plus"></i>
+                    </button>
+
+                    <div class="flex justify-between items-center">
+                        <div class="flex flex-col">
+                            <span class="text-flix-dark font-bold text-xl">৳ ১,২০০</span>
+                            <span class="text-gray-400 line-through text-xs">৳ ১,৫০০</span>
+                        </div>
+                        <div class="text-yellow-400 text-sm">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="group product-card bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 p-4 transition duration-300 relative">
+                     <a href="product-details.html" class="block">
+                        <div class="bg-gray-50 rounded-xl h-56 flex items-center justify-center mb-4 relative overflow-hidden group-hover:bg-gray-100 transition">
+                            <i class="fas fa-mobile-alt text-7xl text-gray-300 group-hover:scale-110 transition duration-500"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-1">স্মার্টফোন X</h3>
+                    </a>
+                    <button onclick="addToCart('স্মার্টফোন X', 25000)" class="absolute top-48 right-4 bg-flix text-white p-3 rounded-full shadow-lg translate-y-20 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-300 hover:bg-flix-dark z-20">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <div class="flex justify-between items-center">
+                        <div class="flex flex-col">
+                            <span class="text-flix-dark font-bold text-xl">৳ ২৫,০০০</span>
+                        </div>
+                        <div class="text-yellow-400 text-sm">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="group product-card bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 p-4 transition duration-300 relative">
+                     <a href="product-details.html" class="block">
+                        <div class="bg-gray-50 rounded-xl h-56 flex items-center justify-center mb-4 relative overflow-hidden group-hover:bg-gray-100 transition">
+                            <span class="absolute top-3 left-3 bg-flix-secondary text-gray-900 text-xs font-bold px-3 py-1 rounded-full z-10">নতুন</span>
+                            <i class="fas fa-shoe-prints text-7xl text-gray-300 group-hover:scale-110 transition duration-500"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-1">স্পোর্টস শু</h3>
+                    </a>
+                     <button onclick="addToCart('স্পোর্টস শু', 1800)" class="absolute top-48 right-4 bg-flix text-white p-3 rounded-full shadow-lg translate-y-20 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-300 hover:bg-flix-dark z-20">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <div class="flex justify-between items-center">
+                        <div class="flex flex-col">
+                            <span class="text-flix-dark font-bold text-xl">৳ ১,৮০০</span>
+                        </div>
+                        <div class="text-yellow-400 text-sm">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 4 -->
+                <div class="group product-card bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 p-4 transition duration-300 relative">
+                     <a href="product-details.html" class="block">
+                        <div class="bg-gray-50 rounded-xl h-56 flex items-center justify-center mb-4 relative overflow-hidden group-hover:bg-gray-100 transition">
+                            <i class="fas fa-laptop text-7xl text-gray-300 group-hover:scale-110 transition duration-500"></i>
+                        </div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-1">ওয়ার্ক স্টেশন</h3>
+                    </a>
+                    <button onclick="addToCart('ওয়ার্ক স্টেশন', 55000)" class="absolute top-48 right-4 bg-flix text-white p-3 rounded-full shadow-lg translate-y-20 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-300 hover:bg-flix-dark z-20">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <div class="flex justify-between items-center">
+                        <div class="flex flex-col">
+                            <span class="text-flix-dark font-bold text-xl">৳ ৫৫,০০০</span>
+                        </div>
+                        <div class="text-yellow-400 text-sm">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="mt-12 flex justify-center">
+                <nav class="flex items-center gap-2">
+                    <button class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100 transition"><i class="fas fa-chevron-left"></i></button>
+                    <button class="w-10 h-10 flex items-center justify-center rounded-full bg-flix text-white font-bold shadow-lg shadow-green-200">1</button>
+                    <button class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100 transition">2</button>
+                    <button class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100 transition">3</button>
+                    <button class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-300 hover:bg-gray-100 transition"><i class="fas fa-chevron-right"></i></button>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8 mt-20 border-t-4 border-flix">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-2"><span class="text-flix text-3xl"><i class="fas fa-bus"></i></span> FlixShop</h3>
+                    <p class="text-gray-400 leading-relaxed">আমরা আপনার জন্য সেরা মানের পণ্য নিয়ে এসেছি সাশ্রয়ী মূল্যে। দ্রুত ডেলিভারি এবং ১০০% গ্যারান্টি।</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6 text-flix-secondary">দ্রুত লিংক</h4>
+                    <ul class="text-gray-400 space-y-3">
+                        <li><a href="#" class="hover:text-flix transition flex items-center gap-2"><i class="fas fa-angle-right text-xs"></i> আমাদের সম্পর্কে</a></li>
+                        <li><a href="#" class="hover:text-flix transition flex items-center gap-2"><i class="fas fa-angle-right text-xs"></i> ট্র্যাক অর্ডার</a></li>
+                        <li><a href="#" class="hover:text-flix transition flex items-center gap-2"><i class="fas fa-angle-right text-xs"></i> রিটার্ন পলিসি</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6 text-flix-secondary">সাহায্য</h4>
+                    <ul class="text-gray-400 space-y-3">
+                        <li><a href="#" class="hover:text-flix transition flex items-center gap-2"><i class="fas fa-angle-right text-xs"></i> FAQ</a></li>
+                        <li><a href="#" class="hover:text-flix transition flex items-center gap-2"><i class="fas fa-angle-right text-xs"></i> শিপিং চার্জ</a></li>
+                        <li><a href="#" class="hover:text-flix transition flex items-center gap-2"><i class="fas fa-angle-right text-xs"></i> যোগাযোগ করুন</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-6 text-flix-secondary">নিউজলেটার</h4>
+                    <p class="text-gray-400 mb-4 text-sm">নতুন নতুন অফার পেতে সাবস্ক্রাইব করুন</p>
+                    <div class="flex">
+                        <input type="email" placeholder="ইমেইল অ্যাড্রেস" class="p-3 rounded-l-lg text-gray-800 w-full focus:outline-none focus:ring-2 focus:ring-flix">
+                        <button class="bg-flix px-6 py-3 rounded-r-lg font-bold hover:bg-flix-dark text-white transition">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">&copy; ২০২৩ FlixShop। সর্বস্বত্ব সংরক্ষিত।</p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-flix transition"><i class="fab fa-facebook-f text-sm"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-flix transition"><i class="fab fa-twitter text-sm"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-flix transition"><i class="fab fa-instagram text-sm"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

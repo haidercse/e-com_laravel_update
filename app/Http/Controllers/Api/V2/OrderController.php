@@ -195,6 +195,7 @@ class OrderController extends Controller
 
         return response()->json([
             'combined_order_id' => $combined_order->id,
+            'order_id' => $order->id,
             'result' => true,
             'message' => translate('Your order has been placed successfully')
         ]);

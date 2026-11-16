@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlixShop - পণ্যের বিস্তারিত</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-gray-800 relative">
+    <!-- Overlay -->
+    <div id="overlay" onclick="closeAllDrawers()" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden transition-opacity duration-300"></div>
+
+    <!-- Navbar -->
+    <nav class="bg-flix text-white sticky top-0 z-50 shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                 <!-- Hamburger (Only opens sidebar on main page, or we can link back) -->
+                 <a href="e-com1.html" class="hover:bg-flix-dark p-2 rounded transition">
+                    <i class="fas fa-arrow-left text-2xl"></i>
+                </a>
+                <a href="e-com1.html" class="text-2xl font-bold flex items-center gap-2">
+                    <span class="text-flix-secondary text-3xl"><i class="fas fa-bus"></i></span> FlixShop
+                </a>
+            </div>
+
+            <!-- Right: Icons -->
+            <div class="flex items-center gap-6">
+                <!-- Cart Trigger -->
+                <button onclick="toggleCart()" class="relative hover:text-flix-secondary transition group">
+                    <div class="flex items-center gap-2">
+                        <div class="relative">
+                            <i class="fas fa-shopping-cart text-2xl group-hover:scale-110 transition-transform"></i>
+                            <span id="cart-count" class="absolute -top-2 -right-2 bg-flix-secondary text-gray-900 text-xs font-bold px-1.5 py-0.5 rounded-full border-2 border-flix">0</span>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Right Cart Sidebar (Same as other pages, logic handled by script.js) -->
+    <aside id="cart-sidebar" class="fixed inset-y-0 right-0 w-96 bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col font-sans">
+        <div class="p-4 bg-gray-900 text-white flex justify-between items-center shadow-md">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-shopping-bag text-flix-secondary"></i>
+                <h2 class="text-xl font-bold">আপনার কার্ট <span id="cart-count-header" class="text-sm bg-flix text-white px-2 py-0.5 rounded-full ml-1">0</span></h2>
+            </div>
+            <button onclick="toggleCart()" class="text-gray-400 hover:text-white transition"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-4">
+            <div id="empty-cart-msg" class="flex flex-col items-center justify-center h-full text-gray-400">
+                <i class="fas fa-shopping-basket text-6xl mb-4 opacity-20"></i>
+                <p>আপনার কার্ট খালি</p>
+                <button onclick="toggleCart()" class="mt-4 text-flix hover:underline font-bold">কেনাকাটা করুন</button>
+            </div>
+        </div>
+        <div class="p-4 border-t bg-gray-50">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-gray-600">মোট খরচ:</span>
+                <span id="cart-total" class="text-xl font-bold text-flix">৳ ০</span>
+            </div>
+            <a href="checkout.html" class="block w-full text-center bg-flix hover:bg-flix-dark text-white font-bold py-3 rounded-lg shadow-lg hover:shadow-xl transition flex justify-center items-center gap-2">
+                চেকআউট পেজে যান <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Product Details Section -->
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Breadcrumb -->
+        <div class="flex items-center gap-2 text-sm text-gray-500 mb-6">
+            <a href="e-com1.html" class="hover:text-flix">হোম</a>
+            <i class="fas fa-chevron-right text-xs"></i>
+            <a href="#" class="hover:text-flix">ইলেকট্রনিক্স</a>
+            <i class="fas fa-chevron-right text-xs"></i>
+            <span class="text-gray-800 font-semibold">প্রিমিয়াম হেডফোন</span>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-10 bg-white p-6 rounded-2xl shadow-lg border border-gray-100">
+            <!-- Product Image -->
+            <div class="w-full md:w-1/2 flex items-center justify-center bg-gray-50 rounded-xl relative p-8 group overflow-hidden">
+                <span class="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10">-২০%</span>
+                <i class="fas fa-headphones text-9xl text-gray-300 group-hover:scale-110 transition duration-500"></i>
+            </div>
+
+            <!-- Product Info -->
+            <div class="w-full md:w-1/2 flex flex-col justify-center">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">প্রিমিয়াম ওয়্যারলেস হেডফোন</h1>
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="text-yellow-400 text-sm">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <span class="text-gray-400 text-sm">(১২০ রিভিউ)</span>
+                    <span class="text-green-500 text-sm font-semibold flex items-center gap-1"><i class="fas fa-check-circle"></i> ইন স্টক</span>
+                </div>
+
+                <div class="flex items-center gap-4 mb-6">
+                    <span class="text-4xl font-bold text-flix-dark">৳ ১,২০০</span>
+                    <span class="text-xl text-gray-400 line-through">৳ ১,৫০০</span>
+                </div>
+
+                <p class="text-gray-600 mb-8 leading-relaxed">
+                    অসাধারণ সাউন্ড কোয়ালিটি এবং দীর্ঘস্থায়ী ব্যাটারি ব্যাকআপ সহ এই হেডফোনটি আপনার দৈনন্দিন ব্যবহারের জন্য আদর্শ। নয়েজ ক্যান্সেলেশন এবং আরামদায়ক ইয়ারকুশন।
+                </p>
+
+                <div class="flex gap-4 mb-8">
+                    <button onclick="addToCart('প্রিমিয়াম হেডফোন', 1200)" class="flex-1 bg-flix hover:bg-flix-dark text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition flex justify-center items-center gap-2 transform hover:-translate-y-1">
+                        <i class="fas fa-shopping-cart"></i> কার্টে যোগ করুন
+                    </button>
+                    <button onclick="toggleWishlist(this)" class="w-16 bg-gray-100 hover:bg-pink-100 text-gray-400 hover:text-pink-500 rounded-xl flex items-center justify-center transition border border-gray-200">
+                        <i class="fas fa-heart text-2xl"></i>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 text-sm text-gray-600">
+                    <div class="flex items-center gap-2"><i class="fas fa-undo text-flix"></i> ৭ দিনের রিটার্ন পলিসি</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-shield-alt text-flix"></i> ১ বছরের ওয়ারেন্টি</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-truck text-flix"></i> দ্রুত ডেলিভারি</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-lock text-flix"></i> ১০০% নিরাপদ পেমেন্ট</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Description & Reviews Tab -->
+        <div class="mt-12">
+            <div class="flex border-b border-gray-200 mb-6">
+                <button class="px-6 py-3 border-b-2 border-flix text-flix font-bold">বিবরণ</button>
+                <button class="px-6 py-3 text-gray-500 hover:text-gray-800">রিভিউ (১২০)</button>
+            </div>
+            
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-gray-600 leading-relaxed">
+                <p class="mb-4">এই হেডফোনটিতে ব্যবহার করা হয়েছে সর্বাধুনিক ব্লুটুথ ৫.০ টেকনোলজি যা দেয় নিরবচ্ছিন্ন সংযোগ। এর ৪০মিমি ড্রাইভার ইউনিট প্রদান করে গভীর বেস এবং স্বচ্ছ ট্রেবল।</p>
+                <ul class="list-disc pl-5 space-y-2">
+                    <li>প্লেব্যাক টাইম: ৩০ ঘন্টা</li>
+                    <li>চার্জিং টাইম: ২ ঘন্টা</li>
+                    <li>ওজন: ২৫০ গ্রাম</li>
+                    <li>রঙ: কালো, নীল, সাদা</li>
+                </ul>
+            </div>
+            
+             <!-- Customer Reviews Section -->
+             <div class="mt-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">গ্রাহক রিভিউ</h3>
+                <div class="space-y-4">
+                    <!-- Review 1 -->
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-white text-xs">A</div>
+                                <span class="font-bold text-sm">আরিফ হোসেন</span>
+                            </div>
+                            <div class="text-yellow-400 text-xs">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600">খুবই ভালো প্রোডাক্ট। সাউন্ড কোয়ালিটি সেরা।</p>
+                    </div>
+                     <!-- Review 2 -->
+                     <div class="bg-gray-50 p-4 rounded-lg">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-white text-xs">R</div>
+                                <span class="font-bold text-sm">রহিম মিয়া</span>
+                            </div>
+                            <div class="text-yellow-400 text-xs">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600">ব্যাটারি ব্যাকআপ ভালো, তবে চার্জ হতে একটু সময় নেয়।</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        <div class="mt-16">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">সম্পর্কিত পণ্য</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                 <!-- Product Card 1 -->
+                <div class="group product-card bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 p-4 transition duration-300 relative">
+                    <div class="bg-gray-50 rounded-xl h-48 flex items-center justify-center mb-4 relative overflow-hidden group-hover:bg-gray-100 transition">
+                         <i class="fas fa-headphones-alt text-6xl text-gray-300 group-hover:scale-110 transition duration-500"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">স্পোর্টস হেডফোন</h3>
+                    <div class="flex justify-between items-center">
+                        <span class="text-flix-dark font-bold">৳ ৮০০</span>
+                        <button onclick="addToCart('স্পোর্টস হেডফোন', 800)" class="text-flix hover:bg-flix hover:text-white p-2 rounded-full transition"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+                 <!-- Product Card 2 -->
+                 <div class="group product-card bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 p-4 transition duration-300 relative">
+                    <div class="bg-gray-50 rounded-xl h-48 flex items-center justify-center mb-4 relative overflow-hidden group-hover:bg-gray-100 transition">
+                         <i class="fas fa-music text-6xl text-gray-300 group-hover:scale-110 transition duration-500"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">ব্লুটুথ স্পিকার</h3>
+                    <div class="flex justify-between items-center">
+                        <span class="text-flix-dark font-bold">৳ ২,৫০০</span>
+                        <button onclick="addToCart('ব্লুটুথ স্পিকার', 2500)" class="text-flix hover:bg-flix hover:text-white p-2 rounded-full transition"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-12 pb-8 mt-20 border-t-4 border-flix">
+         <div class="container mx-auto px-4 text-center">
+            <p class="text-gray-500 text-sm">&copy; ২০২৩ FlixShop। সর্বস্বত্ব সংরক্ষিত।</p>
+         </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function toggleWishlist(btn) {
+            const icon = btn.querySelector('i');
+            if (icon.classList.contains('fas')) {
+                // Remove
+                icon.classList.remove('fas', 'text-pink-500');
+                icon.classList.add('far', 'text-gray-400');
+                btn.classList.remove('bg-pink-100', 'text-pink-500');
+                showToast('উইশলিস্ট থেকে সরানো হয়েছে');
+            } else {
+                // Add
+                icon.classList.remove('far', 'text-gray-400');
+                icon.classList.add('fas', 'text-pink-500');
+                btn.classList.add('bg-pink-100', 'text-pink-500');
+                showToast('উইশলিস্টে যোগ করা হয়েছে');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -51,7 +51,7 @@ Route::get('/users/registration', 'HomeController@registration')->name('user.reg
 Route::post('/users/login/cart', 'HomeController@cart_login')->name('cart.login.submit');
 
 //Home Page
-Route::get('/', 'HomeController@index')->name('home');
+Route::view('/', 'frontend.vue-storefront')->name('home');
 Route::post('/home/section/featured', 'HomeController@load_featured_section')->name('home.section.featured');
 Route::post('/home/section/featureds', 'HomeController@load_featured_sections')->name('home.section.featuredss');
 //Show More
@@ -80,7 +80,7 @@ Route::get('/customer-products/admin', 'IyzicoController@initPayment')->name('pr
 Route::get('/customer-product/{slug}', 'CustomerProductController@customer_product')->name('customer.product');
 Route::get('/customer-packages', 'HomeController@premium_package_index')->name('customer_packages_list_show');
 
-Route::get('/search', 'SearchController@index')->name('search');
+Route::view('/search', 'frontend.vue-storefront')->name('search');
 Route::get('/search?keyword={search}', 'SearchController@index')->name('suggestion.search');
 Route::post('/ajax-search', 'SearchController@ajax_search')->name('search.ajax');
 Route::get('/category/{category_slug}', 'SearchController@listingByCategory')->name('products.category');
@@ -147,7 +147,7 @@ Route::post('/compare/addToCompare', 'CompareController@addToCompare')->name('co
 Route::resource('subscribers', 'SubscriberController');
 
 Route::get('/brands', 'HomeController@all_brands')->name('brands.all');
-Route::get('/categories', 'HomeController@all_categories')->name('categories.all');
+Route::view('/categories', 'frontend.vue-storefront')->name('categories.all');
 Route::get('/sellers', 'HomeController@all_seller')->name('sellers');
 Route::get('/coupons', 'HomeController@all_coupons')->name('coupons.all');
 Route::get('/inhouse', 'HomeController@inhouse_products')->name('inhouse.all');
@@ -370,4 +370,7 @@ Route::get('/blog/{slug}', 'BlogController@blog_details')->name('blog.details');
 Route::get('/mobile-page/{slug}', 'PageController@mobile_custom_page')->name('mobile.custom-pages');
 
 //Custom page
+Route::view('/categories/{id}', 'frontend.vue-storefront');
+Route::view('/products/{id}', 'frontend.vue-storefront');
+Route::view('/account', 'frontend.vue-storefront');
 Route::get('/{slug}', 'PageController@show_custom_page')->name('custom-pages.show_custom_page');

@@ -89,13 +89,14 @@ class AuthController extends Controller
             $customer->user_id = $user->id;
             $customer->save();
 
-            // Create token
-            $user->createToken('tokens')->plainTextToken;
+            // Create and store token
+            $token = $user->createToken('tokens')->plainTextToken;
 
             return response()->json([
                 'result' => true,
                 'message' => translate('Registration Successful. Please verify and log in to your account.'),
-                'user_id' => $user->id
+                'user_id' => $user->id,
+                'token' => $token
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
@@ -129,6 +130,13 @@ class AuthController extends Controller
     public function confirmCode(Request $request)
     {
         $user = User::where('id', $request->user_id)->first();
+
+        if (!$user) {
+            return response()->json([
+                'result' => false,
+                'message' => translate('User not found'),
+            ], 404);
+        }
 
         if ($user->verification_code == $request->verification_code) {
             $user->email_verified_at = date('Y-m-d H:i:s');
@@ -172,24 +180,23 @@ class AuthController extends Controller
                         ->first();
         }
 
-        if (!$delivery_boy_condition) {
-            if (\App\Utility\PayhereUtility::create_wallet_reference($request->identity_matrix) == false) {
-                return response()->json(['result' => false, 'message' => 'Identity matrix error', 'user' => null], 401);
-            }
-        }
-
-        if ($user != null) {
-            if (Hash::check($request->password, $user->password)) {
-                if ($user->email_verified_at == null) {
-                    return response()->json(['result' => false, 'message' => translate('Please verify your account'), 'user' => null], 401);
-                }
-                return $this->loginSuccess($user);
-            } else {
-                return response()->json(['result' => false, 'message' => translate('Unauthorized'), 'user' => null], 401);
-            }
-        } else {
+        // Step 1: Check if user exists
+        if ($user == null) {
             return response()->json(['result' => false, 'message' => translate('User not found'), 'user' => null], 401);
         }
+
+        // Step 2: Verify password
+        if (!Hash::check($request->password, $user->password)) {
+            return response()->json(['result' => false, 'message' => translate('Incorrect password'), 'user' => null], 401);
+        }
+
+        // Step 3: Check if account is verified
+        if ($user->email_verified_at == null) {
+            return response()->json(['result' => false, 'message' => translate('Please verify your account'), 'user' => null], 401);
+        }
+
+        // Step 4: All checks passed - login successful
+        return $this->loginSuccess($user);
     }
 
     public function user(Request $request)

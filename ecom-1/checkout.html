@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlixShop - চেকআউট</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-gray-800">
+
+    <!-- Navbar -->
+    <nav class="bg-flix text-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="e-com1.html" class="text-2xl font-bold flex items-center gap-2">
+                <span class="text-flix-secondary text-3xl"><i class="fas fa-bus"></i></span> FlixShop
+            </a>
+            <a href="e-com1.html" class="hover:text-flix-secondary font-bold flex items-center gap-2">
+                <i class="fas fa-arrow-left"></i> কেনাকাটা চালিয়ে যান
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8 text-center text-gray-800">চেকআউট</h1>
+
+        <div class="flex flex-col lg:flex-row gap-8">
+            
+            <!-- Left: Shipping Form -->
+            <div class="w-full lg:w-2/3">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h2 class="text-xl font-bold mb-6 border-b pb-2 flex items-center gap-2">
+                        <i class="fas fa-map-marker-alt text-flix"></i> শিপিং তথ্য
+                    </h2>
+                    
+                    <form onsubmit="placeOrder(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-700 font-bold mb-2">আপনার নাম</label>
+                                <input type="text" required class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-flix focus:ring-1 focus:ring-flix" placeholder="সম্পূর্ণ নাম">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-bold mb-2">ফোন নাম্বার</label>
+                                <input type="tel" required class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-flix focus:ring-1 focus:ring-flix" placeholder="017...">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2">ঠিকানা</label>
+                            <textarea rows="3" required class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-flix focus:ring-1 focus:ring-flix" placeholder="বাসা নং, রোড নং, এলাকা..."></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2">জেলা/শহর</label>
+                            <select class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:border-flix focus:ring-1 focus:ring-flix">
+                                <option>ঢাকা</option>
+                                <option>চট্টগ্রাম</option>
+                                <option>সিলেট</option>
+                                <option>খুলনা</option>
+                                <option>রাজশাহী</option>
+                                <option>বরিশাল</option>
+                                <option>রংপুর</option>
+                                <option>ময়মনসিংহ</option>
+                            </select>
+                        </div>
+
+                        <div class="mt-6">
+                            <h2 class="text-xl font-bold mb-4 border-b pb-2 flex items-center gap-2">
+                                <i class="fas fa-wallet text-flix"></i> পেমেন্ট মেথড
+                            </h2>
+                            <div class="space-y-3">
+                                <label class="flex items-center gap-3 p-3 border rounded cursor-pointer hover:bg-gray-50">
+                                    <input type="radio" name="payment" value="cod" checked class="accent-flix w-5 h-5">
+                                    <div class="flex-1">
+                                        <span class="font-bold block">ক্যাশ অন ডেলিভারি</span>
+                                        <span class="text-sm text-gray-500">পণ্য হাতে পেয়ে মূল্য পরিশোধ করুন</span>
+                                    </div>
+                                    <i class="fas fa-money-bill-wave text-2xl text-green-600"></i>
+                                </label>
+                                <label class="flex items-center gap-3 p-3 border rounded cursor-pointer hover:bg-gray-50">
+                                    <input type="radio" name="payment" value="online" class="accent-flix w-5 h-5">
+                                    <div class="flex-1">
+                                        <span class="font-bold block">অনলাইন পেমেন্ট / বিকাশ / নগদ</span>
+                                        <span class="text-sm text-gray-500">সুরক্ষিত ও দ্রুত পেমেন্ট</span>
+                                    </div>
+                                    <i class="fas fa-credit-card text-2xl text-blue-600"></i>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-flix hover:bg-flix-dark text-white font-bold py-4 rounded-lg shadow-lg hover:shadow-xl transition mt-6 text-lg">
+                            অর্ডার কনফার্ম করুন
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right: Order Summary -->
+            <div class="w-full lg:w-1/3">
+                <div class="bg-white p-6 rounded-lg shadow-lg sticky top-6">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">অর্ডার সারাংশ</h2>
+                    
+                    <div id="checkout-items" class="space-y-4 max-h-80 overflow-y-auto mb-4">
+                        <!-- Items injected via JS -->
+                    </div>
+
+                    <div class="border-t pt-4 space-y-2">
+                        <div class="flex justify-between text-gray-600">
+                            <span>সাবটোটাল</span>
+                            <span id="subtotal">৳ ০</span>
+                        </div>
+                        <div class="flex justify-between text-gray-600">
+                            <span>ডেলিভারি চার্জ</span>
+                            <span>৳ ৬০</span>
+                        </div>
+                        <div class="flex justify-between text-xl font-bold text-gray-800 border-t pt-2 mt-2">
+                            <span>সর্বমোট</span>
+                            <span id="grand-total" class="text-flix">৳ ৬০</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl text-center max-w-sm w-full mx-4 transform scale-90 transition-transform duration-300" id="modal-content">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-check text-4xl text-green-500"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">অভিনন্দন!</h2>
+            <p class="text-gray-600 mb-6">আপনার অর্ডারটি সফলভাবে গ্রহণ করা হয়েছে। শিগগিরই আমরা আপনার সাথে যোগাযোগ করব।</p>
+            <a href="e-com1.html" class="block w-full bg-flix text-white font-bold py-3 rounded-lg hover:bg-flix-dark transition">
+                আবার কেনাকাটা করুন
+            </a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    <!-- Specific Checkout Logic override or addition -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+             // Load Cart for Checkout (Reuse script.js cart but need specific render for summary)
+            const checkoutItemsEl = document.getElementById('checkout-items');
+            const subtotalEl = document.getElementById('subtotal');
+            const grandTotalEl = document.getElementById('grand-total');
+            const successModal = document.getElementById('success-modal');
+            const modalContent = document.getElementById('modal-content');
+            const deliveryCharge = 60;
+
+            function renderSummary() {
+                let checkoutCart = [];
+                const savedCart = localStorage.getItem('flixCart');
+                if (savedCart) checkoutCart = JSON.parse(savedCart);
+
+                if (checkoutCart.length === 0) {
+                    if(checkoutItemsEl) checkoutItemsEl.innerHTML = '<p class="text-center text-gray-400">আপনার কার্ট খালি</p>';
+                    if(subtotalEl) subtotalEl.innerText = '৳ ০';
+                    if(grandTotalEl) grandTotalEl.innerText = '৳ ০';
+                    return;
+                }
+
+                if(checkoutItemsEl) {
+                    checkoutItemsEl.innerHTML = checkoutCart.map(item => `
+                        <div class="flex justify-between items-center text-sm">
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-gray-500">${item.qty}x</span>
+                                <span class="text-gray-800">${item.name}</span>
+                            </div>
+                            <span class="font-semibold text-gray-700">৳ ${(item.price * item.qty).toLocaleString()}</span>
+                        </div>
+                    `).join('');
+                }
+
+                const subtotal = checkoutCart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+                if(subtotalEl) subtotalEl.innerText = '৳ ' + subtotal.toLocaleString();
+                if(grandTotalEl) grandTotalEl.innerText = '৳ ' + (subtotal + deliveryCharge).toLocaleString();
+            }
+
+            window.placeOrder = function(e) {
+                e.preventDefault();
+                
+                const savedCart = localStorage.getItem('flixCart'); 
+                if (!savedCart || JSON.parse(savedCart).length === 0) {
+                    alert("কার্টে কোনো পণ্য নেই!");
+                    return;
+                }
+
+                // Simulate API call
+                const btn = e.target.querySelector('button[type="submit"]');
+                const originalText = btn.innerText;
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> প্রসেসিং...';
+
+                setTimeout(() => {
+                    // Success
+                    localStorage.removeItem('flixCart');
+                    successModal.classList.remove('hidden');
+                    setTimeout(() => modalContent.classList.remove('scale-90'), 10);
+                }, 1500);
+            }
+
+            renderSummary();
+        });
+    </script>
+</body>
+</html>
